@@ -11,9 +11,13 @@ def index(request: Request) -> HttpResponse:
     num_tags = Tag.objects.count()
     num_tasks = Task.objects.count()
 
+    num_visits = request.session.get("num_visits", 0)
+    request.session["num_visits"] = num_visits + 1
+
     context = {
         "num_tags": num_tags,
         "num_tasks": num_tasks,
+        "num_visits": num_visits + 1
     }
 
     return render(request, "case/index.html", context=context)
