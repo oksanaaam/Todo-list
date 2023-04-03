@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Tags List</h1>
+  {% if tag_list %}
+    <table class="table">
+    <tr>
+        <th>Name</th>
+        <th>Update</th>
+        <th>Delete</th>
+      </tr>
+
+      {% for tag in tag_list %}
+        <tr>
+          <td><strong><a href="{% url "case:tag-detail" pk=tag.id %}">{{ tag.name }}</a></strong></td>
+          <td>
+              <a href="{% url "case:tag-update" tag.id %}" class="btn btn-info">
+                Update
+              </a>
+            </td>
+            <td>
+              <a href="{% url "case:tag-delete" tag.id %}" class="btn btn-warning">
+                Delete
+              </a>
+            </td>
+          </tr>
+      {% endfor %}
+    <a style="float: right"
+       href="{% url "case:tag-create" %}"
+       class="btn btn-primary">Create a new tag
+    </a>
+    </table>
+
+    {% else %}
+    <p>There are no tags in To-do list</p>
+
+  {% endif %} 
+{% endblock %}

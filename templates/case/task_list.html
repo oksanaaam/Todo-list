@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>
+    Tasks List
+  </h2>
+
+
+  {% if task_list %}
+    <ul>
+      {% for task in task_list %}
+        <li>
+          <h4>
+            {{ task.content }}
+            {% if task.is_done %}
+              Done
+            {% else %}
+              In Process...
+            {% endif %}
+          </h4>
+          <p>
+            Created at: {{ task.created_time }}
+            {% if task.deadline %}
+              Deadline: {{ task.deadline }}
+            {% endif %}
+          </p>
+          <h6>
+            Tags:
+              {% for tag in task.tags.all %}
+                <a href="{% url "case:tag-detail" pk=tag.id %}">{{ tag.name }}</a>
+              {% empty %}
+                None
+              {% endfor %}
+          </h6>
+          <p>
+            <a href="{% url "case:task-update" pk=task.id %}" class="btn btn-secondary">
+              Update
+            </a>
+            <a href="{% url "case:task-delete" pk=task.id %}" class="btn btn-danger">
+              Delete
+            </a>
+            {% if task.is_done %}
+              <a href="{% url "case:task-change" pk=task.id %}" class="btn btn-secondary">
+                Undo
+              </a>
+            {% else %}
+              <a href="{% url "case:task-change" pk=task.id %}" class="btn btn-primary">
+                Complete
+              </a>
+            {% endif %}
+
+          </p>
+          <hr>
+        </li>
+      {% endfor %}
+    </ul>
+
+  {% else %}
+    <p>There are no tasks in To-do list</p>
+  {% endif %}
+
+
+{% endblock %}l>

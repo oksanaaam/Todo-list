@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+  <h1>Content : {{ task.content }}</h1>
+  <p><strong>Created Time: </strong> {{ task.created_time }}</p>
+  <p><strong>Deadline: </strong> {{ task.deadline }}</p>
+  <p><strong>Is done: </strong> {{ task.is_done }}</p>
+  <p><strong>PK: </strong> {{ task.pk }}</p>
+
+  <div class="ml-3">
+    <h3>Tags:</h3>
+
+  {% for tag in task.tags.all %}
+    <p><a href="{% url "case:tag-detail" pk=dish.id %}">{{ tag.name }}</a></p>
+  {% empty %}
+    <p>There are no tags in restaurant!</p>
+  {% endfor %}
+
+  </div>
+  <a href="{% url 'case:task-update' pk=task.id %}"
+     class="btn btn-primary">
+    Update
+  </a>
+  <a href="{% url 'case:task-delete' pk=task.id %}"
+     class="btn btn-danger">
+    Delete
+  </a>
+
+{% endblock %}
