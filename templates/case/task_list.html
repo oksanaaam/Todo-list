@@ -6,16 +6,16 @@
   {% if task_list %}
     <table>
       <tr>
-        <th>Content </th>
         <th>Created Time</th>
+        <th>Content </th>
         <th>Deadline</th>
         <th>Is done</th>
       </tr>
       {% for task in task_list %}
         <tr>
 {#          <td><a href={% url 'case:task-detail' pk=task.id %}>{{ task.content }}</a></td>#}
-          <td>{{ task.content }}</td>
           <td>{{ task.created_time }}</td>
+          <td>{{ task.content }}</td>
           <td>{{ task.deadline }}</td>
           <td>{{ task.is_done }}</td>
         </tr>
