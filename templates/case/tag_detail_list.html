@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Tag : {{ tag.name }}</h1>
+  <p><strong>Name: </strong> {{ tag.name  }}</p>
+  <div class="ml-3">
+    <h3>Tasks</h3>
+
+  {% for task in tag.tasks.all %}
+    <hr>
+    <p class="text-muted"><strong>Id: </strong> {{ task.id }}</p>
+    <p><strong>Content: </strong> <a href={% url 'case:task-detail-list' pk=task.id %}>{{ task.content }}</a></p>
+    <p><strong>Created_time: </strong>{{ task.created_time }}</p>
+    <p><strong>Deadline: </strong>{% if task.deadline %}{{ task.deadline }}{% endif %}</p>
+    <p><strong>Is_done: </strong>{{ task.is_done }}</p>
+  {% empty %}
+    <p>There are no tasks!</p>
+  {% endfor %}
+
+  </div>
+
+{% endblock %}
