@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load crispy_forms_filters %}
 
 {% block content %}
   <h1>Content : {{ task.content }}</h1>
@@ -11,10 +12,19 @@
     <h3>Tags:</h3>
 
   {% for tag in task.tags.all %}
-    <p><a href="{% url "case:tag-detail-list" pk=dish.id %}">{{ tag.name }}</a></p>
+    <p><a href="{% url "case:tag-detail" pk=dish.id %}">{{ tag.name }}</a></p>
   {% empty %}
     <p>There are no tags in restaurant!</p>
   {% endfor %}
 
   </div>
+  <a href="{% url 'kitchen:dish-update' pk=dish.id %}"
+     class="btn btn-primary">
+    Update
+  </a>
+  <a href="{% url 'kitchen:dish-delete' pk=dish.id %}"
+     class="btn btn-danger">
+    Delete
+  </a>
+
 {% endblock %}
