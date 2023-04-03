@@ -1,32 +1,63 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>Task List</h1>
+  <h2>
+    Tasks List
+  </h2>
+
 
   {% if task_list %}
-    <table  class="table">
-      <tr>
-        <th>Created Time</th>
-        <th>Content </th>
-        <th>Deadline</th>
-        <th>Is done</th>
-      </tr>
+    <ul>
       {% for task in task_list %}
-        <tr>
-{#          <td><a href={% url 'case:task-detail' pk=task.id %}>{{ task.content }}</a></td>#}
-          <td>{{ task.created_time }}</td>
-          <td>{{ task.content }}</td>
-          <td>{{ task.deadline }}</td>
-          <td>{{ task.is_done }}</td>
-        </tr>
-      {% endfor %}
+        <li>
+          <h4>
+            {{ task.content }}
+            {% if task.is_done %}
+              Done
+            {% else %}
+              In Process...
+            {% endif %}
+          </h4>
+          <p>
+            Created at: {{ task.created_time }}
+            {% if task.deadline %}
+              Deadline: {{ task.deadline }}
+            {% endif %}
+          </p>
+          <h6>
+            Tags:
+              {% for tag in task.tags.all %}
+                <a href="{% url "case:tag-detail" pk=tag.id %}">{{ tag.name }}</a>
+              {% empty %}
+                None
+              {% endfor %}
+          </h6>
+          <p>
+            <a href="{% url "case:task-update" pk=task.id %}" class="btn btn-secondary">
+              Update
+            </a>
+            <a href="{% url "case:task-delete" pk=task.id %}" class="btn btn-danger">
+              Delete
+            </a>
+            {% if task.is_done %}
+              <a href="{% url "case:task-change" pk=task.id %}" class="btn btn-secondary">
+                Undo
+              </a>
+            {% else %}
+              <a href="{% url "case:task-change" pk=task.id %}" class="btn btn-primary">
+                Complete
+              </a>
+            {% endif %}
 
-    <a style="float: right"
-       href="{% url "case:task-create" %}"
-       class="btn btn-primary">Create a new task
-    </a>
-    </table>
+          </p>
+          <hr>
+        </li>
+      {% endfor %}
+    </ul>
+
   {% else %}
     <p>There are no tasks in To-do list</p>
   {% endif %}
+
+
 {% endblock %}l>

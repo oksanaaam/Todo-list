@@ -10,7 +10,7 @@ from case.views import (
     TaskDetailView,
     TaskCreateView,
     TaskUpdateView,
-    TaskDeleteView,
+    TaskDeleteView, change_task,
 )
 
 urlpatterns = [
@@ -32,6 +32,7 @@ urlpatterns = [
         TaskUpdateView.as_view(),
         name="task-update",
     ),
+    path("<int:pk>/change/", change_task, name="task-change"),
     path(
         "tasks/<int:pk>/delete/",
         TaskDeleteView.as_view(),

@@ -12,14 +12,14 @@
 
       {% for tag in tag_list %}
         <tr>
-          <td>{{ tag.name }}</td>
+          <td><strong><a href="{% url "case:tag-detail" pk=tag.id %}">{{ tag.name }}</a></strong></td>
           <td>
-              <a href="{% url "case:tag-update" tag.id %}">
+              <a href="{% url "case:tag-update" tag.id %}" class="btn btn-info">
                 Update
               </a>
             </td>
             <td>
-              <a href="{% url "case:tag-delete" tag.id %}">
+              <a href="{% url "case:tag-delete" tag.id %}" class="btn btn-warning">
                 Delete
               </a>
             </td>

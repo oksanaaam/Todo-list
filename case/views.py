@@ -1,6 +1,6 @@
 from urllib.request import Request
 
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
@@ -55,7 +55,7 @@ class TagDeleteView(generic.DeleteView):
 
 class TaskListView(generic.ListView):
     model = Task
-    paginate_by = 5
+    paginate_by = 3
 
 
 class TaskCreateView(generic.CreateView):
@@ -79,3 +79,9 @@ class TaskDeleteView(generic.DeleteView):
     model = Task
     success_url = reverse_lazy("case:task-list")
 
+
+def change_task(request: Request, pk: int):
+    task = Task.objects.get(id=pk)
+    task.is_done = not task.is_done
+    task.save()
+    return HttpResponseRedirect(reverse_lazy("case:task-list"))
